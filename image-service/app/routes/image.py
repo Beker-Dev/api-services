@@ -1,21 +1,25 @@
-from fastapi import APIRouter, Depends, UploadFile, File, Response
+from fastapi import APIRouter, Depends, UploadFile, File
 from typing import Any, Optional
 from PIL import Image
-import os
 from datetime import datetime
+from sqlalchemy.orm import Session
+import os
 
 from app.schemas.image import ImageCreate, ImageUpdate, ImageShow
+from app.repository.image import image_repository
+from app.core import dependencies as deps
 
 
 router = APIRouter(tags=['Image'], prefix='/images')
 
 
-@router.post("", response_model=Any)
+@router.post("", response_model=ImageShow)
 async def upload_image(
+        db: Session = Depends(deps.get_db),
         image_file: UploadFile = File(...)
 ):
     image_object = get_image_object(image_file)
-    return Response(image_object, 201)
+    return image_repository.create(db=db, obj_in=image_object, img_file=image_file)
 
 
 def get_image_object(file: UploadFile):
@@ -34,10 +38,5 @@ def get_image_object(file: UploadFile):
         "height": height,
         "size": size,
         "bits": bits,
-        "is_active": True,
-        "uploaded_at": "",
-        "modified_at": None,
-        "accessed_at": None,
-        "removed_at": None
     }
-    return str(image_object)
+    return ImageCreate(**image_object)

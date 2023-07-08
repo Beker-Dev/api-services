@@ -15,23 +15,23 @@ class Settings(BaseSettings):
             return v
         raise ValueError(v)
 
-    # DATABASE_URI: Optional[PostgresDsn] = None
+    DATABASE_URI: Optional[PostgresDsn] = None
 
-    # MINIO_ADDRESS: str
-    # MINIO_ACCESS_KEY: str
-    # MINIO_SECRET_KEY: str
-    # MINIO_SECURE_ACCESS: bool
-    # MINIO_BUCKET_NAME: str
-    # MINIO_EXTENSIONS_ACCEPTED: List[str]
+    MINIO_ADDRESS: str
+    MINIO_ACCESS_KEY: str
+    MINIO_SECRET_KEY: str
+    MINIO_SECURE_ACCESS: bool
+    MINIO_BUCKET_NAME: str
+    MINIO_EXTENSIONS_ACCEPTED: List[str]
 
     # KEYCLOAK_BASE_URL: str
     # KEYCLOAK_REALM: str
     # KEYCLOAK_CLIENT_ID: str
     # KEYCLOAK_CLIENT_SECRET: str
 
-    # TESTING: Optional[bool] = False
-    # TESTING_TOKEN: Optional[str]
-    # IMAGE_FILE_TEST_PATH: Optional[str]
+    TESTING: Optional[bool] = False
+    TESTING_TOKEN: Optional[str]
+    IMAGE_FILE_TEST_PATH: Optional[str]
 
     class Config:
         case_sensitive = True
